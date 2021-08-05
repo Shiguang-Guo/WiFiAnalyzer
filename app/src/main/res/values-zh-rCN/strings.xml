@@ -33,6 +33,7 @@
     <string name="action_time_graph">"时间图"</string>
     <string name="action_export">"分享"</string>
     <string name="action_channel_available">"可用的信道"</string>
+    <string name="action_open_hotspot">"打开热点"</string>
     <string name="action_vendors">"制造商"</string>
     <string name="action_settings">"设置"</string>
     <string name="action_about">"关于"</string>

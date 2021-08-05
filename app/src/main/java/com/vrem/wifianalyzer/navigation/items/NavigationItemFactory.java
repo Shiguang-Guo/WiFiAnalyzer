@@ -28,6 +28,7 @@ import com.vrem.wifianalyzer.wifi.channelavailable.ChannelAvailableFragment;
 import com.vrem.wifianalyzer.wifi.channelgraph.ChannelGraphFragment;
 import com.vrem.wifianalyzer.wifi.channelrating.ChannelRatingFragment;
 import com.vrem.wifianalyzer.wifi.timegraph.TimeGraphFragment;
+import com.vrem.wifianalyzer.wifi.openhotspot.OpenHotspotFragment;
 
 public class NavigationItemFactory {
     public static final NavigationItem ACCESS_POINTS = new FragmentItem(new AccessPointsFragment());
@@ -36,6 +37,7 @@ public class NavigationItemFactory {
     public static final NavigationItem TIME_GRAPH = new FragmentItem(new TimeGraphFragment());
     public static final NavigationItem EXPORT = new ExportItem();
     public static final NavigationItem CHANNEL_AVAILABLE = new FragmentItem(new ChannelAvailableFragment(), false);
+    public static final NavigationItem OPEN_HOTSPOT = new FragmentItem(new OpenHotspotFragment());
     public static final NavigationItem VENDORS = new FragmentItem(new VendorFragment(), false, View.GONE);
     public static final NavigationItem SETTINGS = new FragmentItem(new SettingsFragment(), false, View.GONE);
     public static final NavigationItem ABOUT = new FragmentItem(new AboutFragment(), false, View.GONE);

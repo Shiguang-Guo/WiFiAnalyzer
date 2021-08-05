@@ -39,6 +39,7 @@
     <string name="action_time_graph">"Time Graph"</string>
     <string name="action_export">"Export"</string>
     <string name="action_channel_available">"Available Channels"</string>
+    <string name="action_open_hotspot">"Open Hotspot"</string>
     <string name="action_vendors">"Vendors"</string>
     <string name="action_settings">"Settings"</string>
     <string name="action_about">"About"</string>
