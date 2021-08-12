@@ -48,7 +48,7 @@ import com.vrem.wifianalyzer.settings.Settings;
 import com.vrem.wifianalyzer.wifi.accesspoint.ConnectionView;
 import com.vrem.wifianalyzer.wifi.band.WiFiBand;
 import com.vrem.wifianalyzer.wifi.band.WiFiChannel;
-
+//import com.vrem.wifianalyzer.connect.OpenHotspotActivity;
 import java.util.Locale;
 
 import static android.support.design.widget.NavigationView.OnNavigationItemSelectedListener;
