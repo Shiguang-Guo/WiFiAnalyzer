@@ -39,4 +39,8 @@ public interface ScannerService {
     void resume();
 
     void stop();
+
+    boolean connect(@NonNull String ssid, @NonNull String password);
+
+    boolean isConnected(String ssid);
 }

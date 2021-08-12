@@ -2,12 +2,18 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:orientation="vertical" android:layout_width="match_parent"
     android:layout_height="match_parent">
-    <TextView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:textColor="#116"
-        android:textSize="20sp"
-        android:text="@string/action_open_hotspot"/>
+<!--    <Button-->
+<!--        android:layout_width="wrap_content"-->
+<!--        android:layout_height="wrap_content"-->
+<!--        android:id="@+id/open_hotspot"-->
+<!--        android:text="@string/action_open_hotspot"-->
+<!--        android:textSize="20sp"-->
+<!--        android:textColor="#000"-->
+<!--        android:background="#fff"-->
+<!--        />-->
+    <ListView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"/>
 </LinearLayout>
 
 

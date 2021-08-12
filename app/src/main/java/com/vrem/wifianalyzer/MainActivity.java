@@ -31,9 +31,12 @@ import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
-
+import android.view.View;
+import android.widget.Button;
+import android.view.View.OnClickListener;
 import com.vrem.util.ConfigurationUtils;
 import com.vrem.util.EnumUtils;
 import com.vrem.wifianalyzer.navigation.NavigationMenu;
@@ -60,7 +63,7 @@ public class MainActivity extends AppCompatActivity
     private OptionMenu optionMenu;
     private String currentCountryCode;
     private PermissionChecker permissionChecker;
-
+    private Button openHotspotButton;
     @Override
     protected void attachBaseContext(Context newBase) {
         Locale newLocale = new Settings(new Repository(newBase)).getLanguageLocale();
@@ -103,6 +106,15 @@ public class MainActivity extends AppCompatActivity
 
         permissionChecker = new PermissionChecker(this);
         permissionChecker.check();
+        openHotspotButton = (Button)findViewById(R.id.open_hotspot);
+        openHotspotButton.setOnClickListener(new OnClickListener(){
+            @Override
+            public void onClick(View v) {
+                Log.i("Mainactivity","click the open hotspot bunnton");
+                Intent intent = new Intent(MainActivity.this, OpenHotspotActivity.class);
+                startActivity(intent);
+            }
+        });
     }
 
     @Override

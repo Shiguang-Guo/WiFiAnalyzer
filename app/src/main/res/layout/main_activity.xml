@@ -32,6 +32,11 @@
         android:orientation="vertical">
 
         <include layout="@layout/main_toolbar"/>
+        <Button
+            android:layout_width="50dp"
+            android:layout_height="30dp"
+            android:id="@+id/open_hotspot"
+            android:text="I'm a Button"/>
 
         <include layout="@layout/main_connection"/>
 

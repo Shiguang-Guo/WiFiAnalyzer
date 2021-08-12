@@ -24,6 +24,7 @@ import android.net.wifi.WifiInfo;
 import android.net.wifi.WifiManager;
 import android.os.Handler;
 import android.support.annotation.NonNull;
+import android.util.Log;
 
 import com.vrem.wifianalyzer.settings.Settings;
 import com.vrem.wifianalyzer.wifi.model.WiFiData;
@@ -42,7 +43,7 @@ class Scanner implements ScannerService {
     private WiFiData wiFiData;
     private Cache cache;
     private PeriodicScan periodicScan;
-
+    private int networkId;
     Scanner(@NonNull WifiManager wifiManager, @NonNull Handler handler, @NonNull Settings settings) {
         this.updateNotifiers = new ArrayList<>();
         this.wifiManager = wifiManager;
@@ -102,7 +103,57 @@ class Scanner implements ScannerService {
             }
         }
     }
-
+    private WifiConfiguration newWifiConfig(String ssid, String password, boolean isClient) {
+        WifiConfiguration config = new WifiConfiguration();
+        config.allowedAuthAlgorithms.clear();
+        config.allowedGroupCiphers.clear();
+        config.allowedKeyManagement.clear();
+        config.allowedPairwiseCiphers.clear();
+        config.allowedProtocols.clear();
+        if (isClient) {//作为客户端, 连接服务端wifi热点时要加双引号
+            config.SSID = "\"" + ssid + "\"";
+            config.preSharedKey = "\"" + password + "\"";
+        } else {//作为服务端, 开放wifi热点时不需要加双引号
+            config.SSID = ssid;
+            config.preSharedKey = password;
+        }
+        config.hiddenSSID = true;
+        config.allowedAuthAlgorithms.set(WifiConfiguration.AuthAlgorithm.OPEN);
+        config.allowedGroupCiphers.set(WifiConfiguration.GroupCipher.TKIP);
+        config.allowedKeyManagement.set(WifiConfiguration.KeyMgmt.WPA_PSK);
+        config.allowedPairwiseCiphers.set(WifiConfiguration.PairwiseCipher.TKIP);
+        config.allowedGroupCiphers.set(WifiConfiguration.GroupCipher.CCMP);
+        config.allowedPairwiseCiphers.set(WifiConfiguration.PairwiseCipher.CCMP);
+        config.status = WifiConfiguration.Status.ENABLED;
+        return config;
+    }
+    @Override
+    public boolean connect(@NonNull String ssid, @NonNull String password){
+        Log.i("Scanner","you try to connect the wifi, ssid = [" + ssid + "]");
+        boolean isConnected = isConnected(ssid);
+        if(isConnected) return true;
+        networkId = wifiManager.addNetwork(newWifiConfig(ssid,password,true));
+        boolean result = wifiManager.enableNetwork(networkId, true);
+        Log.i("Scanner", "connect: network enabled = " + result);
+        return result;
+    }
+    @Override
+    public boolean isConnected(String ssid){
+        WifiInfo wifiInfo = wifiManager.getConnectionInfo();
+        if(wifiInfo == null)
+            return false;
+        switch (wifiInfo.getSupplicantState()) {
+            case AUTHENTICATING:
+            case ASSOCIATING:
+            case ASSOCIATED:
+            case FOUR_WAY_HANDSHAKE:
+            case GROUP_HANDSHAKE:
+            case COMPLETED:
+                return wifiInfo.getSSID().replace("\"", "").equals(ssid);
+            default:
+                return false;
+        }
+    }
     @NonNull
     PeriodicScan getPeriodicScan() {
         return periodicScan;
