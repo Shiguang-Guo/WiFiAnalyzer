@@ -36,7 +36,8 @@
             android:layout_width="50dp"
             android:layout_height="30dp"
             android:id="@+id/open_hotspot"
-            android:text="I'm a Button"/>
+            android:textSize="10dp"
+            android:text="CLICK"/>
 
         <include layout="@layout/main_connection"/>
 
