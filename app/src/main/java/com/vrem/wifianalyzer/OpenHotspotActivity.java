@@ -17,8 +17,16 @@ import com.vrem.wifianalyzer.WifiListAdapter;
 import com.vrem.wifianalyzer.settings.Settings;
 import com.vrem.wifianalyzer.wifi.band.WiFiBand;
 import com.vrem.wifianalyzer.wifi.band.WiFiChannel;
+import com.vrem.wifianalyzer.wifi.model.SortBy;
+import com.vrem.wifianalyzer.wifi.model.WiFiData;
+import com.vrem.wifianalyzer.wifi.model.WiFiDetail;
+import com.vrem.wifianalyzer.wifi.predicate.WiFiBandPredicate;
 import com.vrem.wifianalyzer.wifi.scanner.ScannerService;
 import com.vrem.wifianalyzer.wifi.band.WiFiChannels;
+import com.vrem.wifianalyzer.wifi.model.WiFiData;
+
+import org.apache.commons.collections4.Predicate;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -62,13 +70,16 @@ public class OpenHotspotActivity extends AppCompatActivity {
         getButton.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View v) {
+                WiFiData wiFiData= scanner.getWiFiData();
+                Settings settings = MainContext.INSTANCE.getSettings();
+                WiFiBand wiFiBand = settings.getWiFiBand();
+                Predicate<WiFiDetail> predicate = new WiFiBandPredicate(wiFiBand);
+                List<WiFiDetail> wifiDetails = wiFiData.getWiFiDetails(predicate, SortBy.STRENGTH);
                 dataList.clear();
-                dataList.add("刷新");
+                for(WiFiDetail detail:wifiDetails){
+                    dataList.add(detail.getTitle());
+                }
                 wifiListAdapter.notifyDataSetChanged();
-//                Settings settings = MainContext.INSTANCE.getSettings();
-//                WiFiBand wiFiBand = settings.getWiFiBand();
-//                List<WiFiChannel> wiFiChannels = setWiFiChannels(wiFiBand);
-                Log.d("OPENHOTSPOT",WiFiBand.GHZ2.getWiFiChannels().getWiFiChannels().toString());
             }
         });
     }
