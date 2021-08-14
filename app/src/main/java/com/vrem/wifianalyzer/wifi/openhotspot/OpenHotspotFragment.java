@@ -47,36 +47,36 @@ public class OpenHotspotFragment extends Fragment{
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState){
         super.onViewCreated(view, savedInstanceState);
     }
-    @Override
-    public void onActivityCreated(Bundle savedInstanceState) {
-        super.onActivityCreated(savedInstanceState);
-        openButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Log.i("TAG","you are opening hotspot");
-                flag = !flag;
-                if(setHotspotEnabled(flag)){
-                    Log.i("TAG","success!");
-                }
-                else
-                    Log.i("TAG","fail!");
-            }
-        });
-    }
-    public boolean setHotspotEnabled(boolean enabled){
-        if(enabled){
-            wifiManager.setWifiEnabled(false);
-        }
-        try {
-            WifiConfiguration wifiConfiguration = new WifiConfiguration();
-            wifiConfiguration.SSID = "myssid";
-            wifiConfiguration.preSharedKey="123456";
-            Method method = wifiManager.getClass().getMethod(
-                    "setHotspotEnabled", WifiConfiguration.class, Boolean.TYPE
-            );
-            return (Boolean) method.invoke(wifiManager,wifiConfiguration,enabled);
-        }catch (Exception e){
-            return false;
-        }
-    }
+//    @Override
+//    public void onActivityCreated(Bundle savedInstanceState) {
+//        super.onActivityCreated(savedInstanceState);
+//        openButton.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View view) {
+//                Log.i("TAG","you are opening hotspot");
+//                flag = !flag;
+//                if(setHotspotEnabled(flag)){
+//                    Log.i("TAG","success!");
+//                }
+//                else
+//                    Log.i("TAG","fail!");
+//            }
+//        });
+//    }
+//    public boolean setHotspotEnabled(boolean enabled){
+//        if(enabled){
+//            wifiManager.setWifiEnabled(false);
+//        }
+//        try {
+//            WifiConfiguration wifiConfiguration = new WifiConfiguration();
+//            wifiConfiguration.SSID = "myssid";
+//            wifiConfiguration.preSharedKey="123456";
+//            Method method = wifiManager.getClass().getMethod(
+//                    "setHotspotEnabled", WifiConfiguration.class, Boolean.TYPE
+//            );
+//            return (Boolean) method.invoke(wifiManager,wifiConfiguration,enabled);
+//        }catch (Exception e){
+//            return false;
+//        }
+//    }
 }

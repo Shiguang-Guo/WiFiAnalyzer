@@ -23,11 +23,17 @@
             android:hint="请输入密码"
             android:id="@+id/password_input"/>
     </RelativeLayout>
+<!--    <Button-->
+<!--        android:id="@+id/connect"-->
+<!--        android:layout_width="wrap_content"-->
+<!--        android:layout_height="wrap_content"-->
+<!--        android:text="Connect"-->
+<!--        android:textAllCaps="false" />-->
     <Button
-        android:id="@+id/connect"
+        android:id="@+id/open"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Connect"
+        android:text="Open"
         android:textAllCaps="false" />
     <Button
         android:id="@+id/get"

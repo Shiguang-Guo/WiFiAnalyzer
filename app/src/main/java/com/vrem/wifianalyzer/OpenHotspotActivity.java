@@ -31,7 +31,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class OpenHotspotActivity extends AppCompatActivity {
-    private Button connectButton, getButton;
+    private Button connectButton, getButton, openButton;
     private WifiManager wifiManager;
     private ScannerService scanner;
     private String ssid;
@@ -40,13 +40,14 @@ public class OpenHotspotActivity extends AppCompatActivity {
     private ListView wifiList;
     private List<String> dataList = new ArrayList<>();
     private WifiListAdapter wifiListAdapter;
+    private boolean apFlag = false;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_open_hotspot);
         getButton = (Button)findViewById(R.id.get);
-        connectButton = (Button)findViewById(R.id.connect);
-
+//        connectButton = (Button)findViewById(R.id.connect);
+        openButton = (Button)findViewById((R.id.open));
         scanner = MainContext.INSTANCE.getScannerService();
         ssidEditText = (EditText)findViewById(R.id.ssid_input);
         passwordEditText = (EditText)findViewById(R.id.password_input);
@@ -58,15 +59,15 @@ public class OpenHotspotActivity extends AppCompatActivity {
         }
         wifiList.setAdapter(wifiListAdapter);
         wifiList.setSelection(4);
-        connectButton.setOnClickListener(new OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                ssid = ssidEditText.getText().toString();
-                password = passwordEditText.getText().toString();
-                Log.i("OpenHotspotActivity","you click the get button to connect, ssid = [" + ssid + "], password = " + password);
-                scanner.connect(ssid,password);
-            }
-        });
+//        connectButton.setOnClickListener(new OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                ssid = ssidEditText.getText().toString();
+//                password = passwordEditText.getText().toString();
+//                Log.i("OpenHotspotActivity","you click the get button to connect, ssid = [" + ssid + "], password = " + password);
+//                scanner.connect(ssid,password);
+//            }
+//        });
         getButton.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -80,6 +81,16 @@ public class OpenHotspotActivity extends AppCompatActivity {
                     dataList.add(detail.getTitle());
                 }
                 wifiListAdapter.notifyDataSetChanged();
+            }
+        });
+        openButton.setOnClickListener(new OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Log.i("OpenHotspotActivity","you click the open button");
+                ssid = ssidEditText.getText().toString();
+                password = passwordEditText.getText().toString();
+                apFlag = !apFlag;
+                scanner.setWifiApEnabled(apFlag, ssid, password);
             }
         });
     }

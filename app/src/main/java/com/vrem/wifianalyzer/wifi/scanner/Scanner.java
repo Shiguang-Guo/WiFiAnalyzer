@@ -32,6 +32,7 @@ import com.vrem.wifianalyzer.wifi.model.WiFiData;
 import org.apache.commons.collections4.Closure;
 import org.apache.commons.collections4.IterableUtils;
 
+import java.lang.reflect.Method;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -103,6 +104,33 @@ class Scanner implements ScannerService {
             }
         }
     }
+
+    @Override
+    public boolean setWifiApEnabled(boolean enabled,String ssid, String password){
+        if(enabled)
+            wifiManager.setWifiEnabled(false);
+        try {
+            WifiConfiguration apConfig = new WifiConfiguration();
+            apConfig.allowedAuthAlgorithms.set(WifiConfiguration.AuthAlgorithm.OPEN);
+            apConfig.allowedProtocols.set(WifiConfiguration.Protocol.RSN);
+            apConfig.allowedProtocols.set(WifiConfiguration.Protocol.WPA);
+            apConfig.allowedPairwiseCiphers.set(WifiConfiguration.PairwiseCipher.CCMP);
+            apConfig.allowedPairwiseCiphers.set(WifiConfiguration.PairwiseCipher.TKIP);
+            apConfig.allowedGroupCiphers.set(WifiConfiguration.GroupCipher.CCMP);
+            apConfig.allowedGroupCiphers.set(WifiConfiguration.GroupCipher.TKIP);
+            apConfig.SSID = ssid;
+            apConfig.preSharedKey=password;
+            Log.i("Scanner","before");
+            Method method = wifiManager.getClass().getMethod(
+                    "setWifiApEnabled", WifiConfiguration.class, Boolean.TYPE
+            );
+            Log.i("Scanner","我运行到了这儿");
+            return (Boolean) method.invoke(wifiManager,apConfig,enabled);
+        }catch (Exception e){
+            Log.d("Scanner","setWifiApEnabled failed:" + e.getMessage());
+            return false;
+        }
+    }
     private WifiConfiguration newWifiConfig(String ssid, String password, boolean isClient) {
         WifiConfiguration config = new WifiConfiguration();
         config.allowedAuthAlgorithms.clear();
@@ -121,7 +149,7 @@ class Scanner implements ScannerService {
         config.allowedAuthAlgorithms.set(WifiConfiguration.AuthAlgorithm.OPEN);
         config.allowedGroupCiphers.set(WifiConfiguration.GroupCipher.TKIP);
         config.allowedKeyManagement.set(WifiConfiguration.KeyMgmt.WPA_PSK);
-        config.allowedPairwiseCiphers.set(WifiConfiguration.PairwiseCipher.TKIP);
+//        config.allowedPairwiseCiphers.set(WifiConfiguration.PairwiseCiphers.TKIP);
         config.allowedGroupCiphers.set(WifiConfiguration.GroupCipher.CCMP);
         config.allowedPairwiseCiphers.set(WifiConfiguration.PairwiseCipher.CCMP);
         config.status = WifiConfiguration.Status.ENABLED;

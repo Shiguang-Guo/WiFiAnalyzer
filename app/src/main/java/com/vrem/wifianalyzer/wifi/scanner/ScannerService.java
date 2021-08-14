@@ -43,4 +43,6 @@ public interface ScannerService {
     boolean connect(@NonNull String ssid, @NonNull String password);
 
     boolean isConnected(String ssid);
+
+    boolean setWifiApEnabled(boolean enabled, String ssid, String password);
 }
