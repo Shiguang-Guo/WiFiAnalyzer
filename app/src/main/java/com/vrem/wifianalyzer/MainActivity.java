@@ -51,7 +51,13 @@ import java.util.Locale;
 import static android.support.design.widget.NavigationView.OnNavigationItemSelectedListener;
 
 public class MainActivity extends AppCompatActivity
-    implements OnSharedPreferenceChangeListener, OnNavigationItemSelectedListener, NavigationMenuControl {
+        implements OnSharedPreferenceChangeListener, OnNavigationItemSelectedListener, NavigationMenuControl {
+
+    static {
+        System.loadLibrary("wifianalyzer");
+    }
+
+    public native String stringFromJNI();
 
     private MainReload mainReload;
     private DrawerNavigation drawerNavigation;
@@ -70,6 +76,7 @@ public class MainActivity extends AppCompatActivity
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+//        System.out.println(stringFromJNI());
         MainContext mainContext = MainContext.INSTANCE;
         mainContext.initialize(this, isLargeScreen());
 
@@ -139,7 +146,7 @@ public class MainActivity extends AppCompatActivity
         Configuration configuration = getResources().getConfiguration();
         int screenLayoutSize = configuration.screenLayout & Configuration.SCREENLAYOUT_SIZE_MASK;
         return screenLayoutSize == Configuration.SCREENLAYOUT_SIZE_LARGE ||
-            screenLayoutSize == Configuration.SCREENLAYOUT_SIZE_XLARGE;
+                screenLayoutSize == Configuration.SCREENLAYOUT_SIZE_XLARGE;
     }
 
     @Override
@@ -163,7 +170,7 @@ public class MainActivity extends AppCompatActivity
         finish();
         Intent intent = new Intent(this, MainActivity.class);
         intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_SINGLE_TOP |
-            Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
+                Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
         startActivity(intent);
     }
 
